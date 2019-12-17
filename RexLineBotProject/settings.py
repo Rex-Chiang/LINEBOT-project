@@ -120,9 +120,9 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LINE_CHANNEL_ACCESS_TOKEN = "6LVYUi+ojogSoGVbdnTn/gfW/zMx5hdCdhIvgkzqWrskLewJ8BJhc03j/e0hSZBjGa4h6H5FoUq6+oAfD6VdwlSCQ1tCvHwk/6jiNi9H9ZlEh6cAv9RemFhB1gk2hEN6JNDpgzvAIeh98XBcongBtwdB04t89/1O/w1cDnyilFU="
+#LINE_CHANNEL_ACCESS_TOKEN = "6LVYUi+ojogSoGVbdnTn/gfW/zMx5hdCdhIvgkzqWrskLewJ8BJhc03j/e0hSZBjGa4h6H5FoUq6+oAfD6VdwlSCQ1tCvHwk/6jiNi9H9ZlEh6cAv9RemFhB1gk2hEN6JNDpgzvAIeh98XBcongBtwdB04t89/1O/w1cDnyilFU="
 
-LINE_CHANNEL_SECRET = "db04f4ae5573e6f0f5ba4e64c9bb06fd"
+#LINE_CHANNEL_SECRET = "db04f4ae5573e6f0f5ba4e64c9bb06fd"
 
 LOGGING = {
     'version': 1,
