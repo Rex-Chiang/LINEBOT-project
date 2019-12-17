@@ -3,6 +3,7 @@ certifi==2019.11.28
 chardet==3.0.4
 Django==2.2.5
 future==0.18.2
+gunicorn==19.9.0
 idna==2.8
 line-bot-sdk==1.15.0
 pytz==2019.3
