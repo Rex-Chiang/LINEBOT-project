@@ -1,1 +1,1 @@
-web: gunicorn RexLineBotProject.wsgi
+web: gunicorn RexLineBotProject.wsgi --log-file -
