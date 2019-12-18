@@ -30,13 +30,14 @@ class Crawler:
     
     def Get_Contents(self):
         today_content = self.page.find('div',{'class':'TODAY_CONTENT'}).text.lstrip()
+        today_content = today_content.replace("\n", "\n\n")   
         today_content = today_content.replace("：", ":"+"\n")
         
         today_lucky = self.page.find_all('div',{'class':'LUCKY'})
         lucky_number = today_lucky[0].text.strip()
         lucky_color = today_lucky[1].text.strip()
         
-        result = today_content + "\n" + "幸運色: " + lucky_color + "\n" + "幸運號碼: " + lucky_number
+        result = today_content + "幸運色: " + lucky_color + "\n" + "幸運號碼: " + lucky_number
         
         return result
         
