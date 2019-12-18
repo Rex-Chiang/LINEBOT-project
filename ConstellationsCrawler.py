@@ -29,8 +29,7 @@ class Crawler:
         self.page = soup(html.text,'html.parser')
     
     def Get_Contents(self):
-        page = self.page
-        today_content = page.find('div',{'class':'TODAY_CONTENT'})
+        today_content = self.page.find('div',{'class':'TODAY_CONTENT'})
         return today_content.text
         
 if __name__ == "__main__":

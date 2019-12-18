@@ -36,11 +36,12 @@ def callback(request):
             #　isinstance判斷對象是否為已知類型
             if isinstance(event, MessageEvent):
                 
-                c = Crawler.Get_Contents(event.message.text)
+                c = Crawler()
+                text = c.Get_Contents(event.message.text)
                 
                 line_bot_api.reply_message(
                     event.reply_token,
-                   TextSendMessage(c)#text=event.message.text)
+                   TextSendMessage(text)#text=event.message.text)
                 )
         return HttpResponse()
     else:
