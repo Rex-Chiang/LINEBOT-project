@@ -10,6 +10,8 @@ from linebot.models import MessageEvent, TextSendMessage
 from ConstellationsCrawler import Crawler1
 from WordsCrawler import Crawler2
 
+import time
+
 # 這邊是Linebot的授權TOKEN(註冊LineDeveloper帳號會取得)，
 # 使用時記得設成環境變數，不要公開在程式碼
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
@@ -38,15 +40,18 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 
                 try:
-                    crawler = Crawler1(event.message.text)
-                    text = crawler.Get_Contents()
+                    crawler1 = Crawler1(event.message.text)
+                    text = crawler1.Get_Contents()
                 except:
                     text=event.message.text
                     
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
-                
+            
+            #if time.strftime("%H") in [8, 12, 18]:
+            crawler2 = Crawler2()
+            text = crawler2.Get_Word()
             user_id = event.source.user_id
-            line_bot_api.push_message(user_id, TextSendMessage(text='Hello World!'))
+            line_bot_api.push_message(user_id, TextSendMessage(text))
                 
         return HttpResponse()
     else:
