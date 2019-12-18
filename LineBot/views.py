@@ -36,8 +36,8 @@ def callback(request):
             #　isinstance判斷對象是否為已知類型
             if isinstance(event, MessageEvent):
                 
-                c = Crawler()
-                text = c.Get_Contents(event.message.text)
+                c = Crawler(event.message.text)
+                text = c.Get_Contents()
                 
                 line_bot_api.reply_message(
                     event.reply_token,
