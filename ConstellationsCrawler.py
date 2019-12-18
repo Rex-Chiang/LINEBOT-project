@@ -29,7 +29,9 @@ class Crawler:
         self.page = soup(html.text,'html.parser')
     
     def Get_Contents(self):
-        today_content = self.page.find('div',{'class':'TODAY_CONTENT'}).text
+        today_content = self.page.find('div',{'class':'TODAY_CONTENT'}).text.lstrip()
+        today_content = today_content.replace("：", ":"+"\n")
+        
         today_lucky = self.page.find_all('div',{'class':'LUCKY'})
         lucky_number = today_lucky[0].text.strip()
         lucky_color = today_lucky[1].text.strip()
