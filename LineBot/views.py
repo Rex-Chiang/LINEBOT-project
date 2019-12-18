@@ -6,8 +6,11 @@ from django.views.decorators.csrf import csrf_exempt
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextSendMessage
-# 這邊是Linebot的授權TOKEN(等等註冊LineDeveloper帳號會取得)，
-# 我們為DEMO方便暫時存在settings裡面存取，實際上使用的時候記得設成環境變數，不要公開在程式碼裡喔！
+
+from ConstellationsCrawler import Crawler
+
+# 這邊是Linebot的授權TOKEN(註冊LineDeveloper帳號會取得)，
+# 使用時記得設成環境變數，不要公開在程式碼
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
@@ -15,21 +18,29 @@ parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 def callback(request):
 
     if request.method == 'POST':
+        # 取得憑證，用於解析時確認訊息是真的來自 Line Server
         signature = request.META['HTTP_X_LINE_SIGNATURE']
         body = request.body.decode('utf-8')
-
+        # 解析事件類型
         try:
             events = parser.parse(body, signature)
+        # 訊息並非來自 Line Server
         except InvalidSignatureError:
             return HttpResponseForbidden()
+        # Line Server 出現狀況
         except LineBotApiError:
             return HttpResponseBadRequest()
 
         for event in events:
+            # 確保為文字訊息
+            #　isinstance判斷對象是否為已知類型
             if isinstance(event, MessageEvent):
+                
+                c = Crawler.Get_Contents(event.message.text)
+                
                 line_bot_api.reply_message(
                     event.reply_token,
-                   TextSendMessage("123")#text=event.message.text)
+                   TextSendMessage(c)#text=event.message.text)
                 )
         return HttpResponse()
     else:
