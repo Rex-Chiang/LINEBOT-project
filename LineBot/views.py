@@ -7,7 +7,8 @@ from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, TextSendMessage
 
-from ConstellationsCrawler import Crawler
+from ConstellationsCrawler import Crawler1
+from WordsCrawler import Crawler2
 
 # 這邊是Linebot的授權TOKEN(註冊LineDeveloper帳號會取得)，
 # 使用時記得設成環境變數，不要公開在程式碼
@@ -37,12 +38,15 @@ def callback(request):
             if isinstance(event, MessageEvent):
                 
                 try:
-                    crawler = Crawler(event.message.text)
+                    crawler = Crawler1(event.message.text)
                     text = crawler.Get_Contents()
                 except:
                     text=event.message.text
                     
                 line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
+                
+            user_id = event.source.user_id
+            line_bot_api.push_message(user_id, TextSendMessage(text='Hello World!'))
                 
         return HttpResponse()
     else:

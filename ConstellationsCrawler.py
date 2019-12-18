@@ -1,7 +1,7 @@
 import requests
 from bs4 import BeautifulSoup as soup
 
-class Crawler:
+class Crawler1:
     def __init__(self, constellation, date = ""):
         
         headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
@@ -43,5 +43,5 @@ class Crawler:
         return result
         
 if __name__ == "__main__":
-    crawler = Crawler("射手", "2019-12-19")
+    crawler = Crawler1("射手", "2019-12-19")
     print(crawler.Get_Contents())

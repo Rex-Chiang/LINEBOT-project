@@ -2,7 +2,7 @@ import requests
 import random
 from bs4 import BeautifulSoup as soup
 
-class Crawler:
+class Crawler2:
     def __init__(self):
         
         headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
@@ -33,5 +33,5 @@ class Crawler:
         return random.choice(words)
         
 if __name__ == "__main__":
-    crawler = Crawler()
+    crawler = Crawler2()
     print(crawler.Get_Word())
