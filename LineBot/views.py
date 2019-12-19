@@ -5,8 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
-
+from linebot.models import MessageEvent, PostbackEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 from ConstellationsCrawler import Crawler1
 from WordsCrawler import Crawler2
 
@@ -46,7 +45,8 @@ def callback(request):
                 except:
                     
                     user_id = event.source.user_id
-                    
+                    print('【receive type】', event.message.type)
+                    print('【text content】', event.message.txt)
                     if event.message.text == "menu":
                         button_template_message = ButtonsTemplate(
                                 thumbnail_image_url = "https://i.imgur.com/eTldj2E.png?1",
@@ -66,21 +66,14 @@ def callback(request):
                             )
                     
                         line_bot_api.push_message(user_id, TemplateSendMessage(alt_text = "Just for mobile APP", template = button_template_message))
-                    
-                    if event.postback.data == "word":
-                        crawler2 = Crawler2()
-                        text = crawler2.Get_Word()
-                        line_bot_api.push_message(user_id, TextSendMessage(text))
-                    
-                    
             
-            #if time.strftime("%H") in [8, 12, 18]:
-            #crawler2 = Crawler2()
-            #text = crawler2.Get_Word()
-            #user_id = event.source.user_id
-            #line_bot_api.push_message(user_id, TextSendMessage(text))
-            
-               
+            elif isinstance(event, PostbackEvent):
+                if event.postback.data == "word":
+                    user_id = event.source.user_id
+                    crawler2 = Crawler2()
+                    text = crawler2.Get_Word()
+                    line_bot_api.push_message(user_id, TextSendMessage(text))
+                
                     
         return HttpResponse()
     else:
