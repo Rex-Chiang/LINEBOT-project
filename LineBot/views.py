@@ -5,11 +5,9 @@ from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, PostbackEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
+from linebot.models import MessageEvent, PostbackEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction
 from ConstellationsCrawler import Crawler1
 from WordsCrawler import Crawler2
-
-import time
 
 # 這邊是Linebot的授權TOKEN(註冊LineDeveloper帳號會取得)，
 # 使用時記得設成環境變數，不要公開在程式碼
@@ -43,11 +41,9 @@ def callback(request):
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
                 
                 except:
-                    
-                    user_id = event.source.user_id
                     if event.message.text == "menu":
                         button_template_message = ButtonsTemplate(
-                                thumbnail_image_url = "https://i.imgur.com/Gti2gyT.jpg",
+                                thumbnail_image_url = "https://i.imgur.com/MpVihQk.jpg",
                                 title = 'Menu', 
                                 text = 'Please select',
                                 ratio = "1.51:1",
@@ -67,10 +63,9 @@ def callback(request):
             
             elif isinstance(event, PostbackEvent):
                 if event.postback.data == "word":
-                    user_id = event.source.user_id
                     crawler2 = Crawler2()
                     text = crawler2.Get_Word()
-                    line_bot_api.push_message(user_id, TextSendMessage(text))
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
                 
                     
         return HttpResponse()
