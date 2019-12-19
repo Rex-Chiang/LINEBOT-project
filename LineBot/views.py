@@ -63,7 +63,7 @@ def callback(request):
                                 ]
                             )
                     
-                        line_bot_api.reply_message(event.reply_token, TextSendMessage(text = "hi"))
+                        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "Just for mobile APP", template = button_template_message))
             
             elif isinstance(event, PostbackEvent):
                 if event.postback.data == "word":
