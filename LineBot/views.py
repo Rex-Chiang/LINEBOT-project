@@ -56,7 +56,7 @@ def callback(request):
                                     # PostbackTemplateAction 點擊選項後，除了文字會顯示在聊天室中，還回傳data中的資料，
                                     # 此類透過 Postback event 處理。
                                     PostbackTemplateAction(
-                                        label = 'English Vocabulary Word', 
+                                        label = 'Vocabulary Word', 
                                         text = None,
                                         data = 'word'
                                     )
