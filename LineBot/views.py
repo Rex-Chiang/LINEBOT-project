@@ -39,46 +39,59 @@ def callback(request):
             #　isinstance判斷對象是否為已知類型
             if isinstance(event, MessageEvent):
                 
-                try:
-                    crawler1 = Crawler1(event.message.text)
-                    text = crawler1.Get_Contents()
-                except:
-                    text=event.message.text
+                #try:
+                #    crawler1 = Crawler1(event.message.text)
+                #    text = crawler1.Get_Contents()
+                #except:
+                #    text = event.message.text
                     
-                line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
+                #line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
             
             #if time.strftime("%H") in [8, 12, 18]:
-            crawler2 = Crawler2()
-            text = crawler2.Get_Word()
-            user_id = event.source.user_id
-            line_bot_api.push_message(user_id, TextSendMessage(text))
+            #crawler2 = Crawler2()
+            #text = crawler2.Get_Word()
+            #user_id = event.source.user_id
+            #line_bot_api.push_message(user_id, TextSendMessage(text))
             
-            button_template_message = ButtonsTemplate(
-                            thumbnail_image_url="https://i.imgur.com/eTldj2E.png?1",
-                            title='Menu', 
-                            text='Please select',
-                            ratio="1.51:1",
-                            image_size="cover",
-                            actions=[
-#                                PostbackTemplateAction 點擊選項後，
-#                                 除了文字會顯示在聊天室中，
-#                                 還回傳data中的資料，可
-#                                 此類透過 Postback event 處理。
-                                PostbackTemplateAction(
-                                    label='postback還會回傳data參數', 
-                                    text='postback text',
-                                    data='action=buy&itemid=1'
-                                ),
-                                MessageTemplateAction(
-                                    label='message會回傳text文字', text='message text'
-                                ),
-                                URITemplateAction(
-                                    label='uri可回傳網址', uri='http://www.xiaosean.website/'
+                try:
+                    crawler1 = Crawler1(event.message.text)
+                    text1 = crawler1.Get_Contents()
+                    crawler2 = Crawler2()
+                    text2 = crawler2.Get_Word()
+                    user_id = event.source.user_id
+            
+                    button_template_message = ButtonsTemplate(
+                                    thumbnail_image_url="https://i.imgur.com/eTldj2E.png?1",
+                                    title='Menu', 
+                                    text='Please select',
+                                    ratio="1.51:1",
+                                    image_size="cover",
+                                    actions=[
+        #                                PostbackTemplateAction 點擊選項後，
+        #                                 除了文字會顯示在聊天室中，
+        #                                 還回傳data中的資料，可
+        #                                 此類透過 Postback event 處理。
+                                        #PostbackTemplateAction(
+                                        #    label='postback還會回傳data參數', 
+                                        #    text='postback text',
+                                        #    data='action=buy&itemid=1'
+                                        #),
+                                        MessageTemplateAction(
+                                            label = "Constellations", text = text1
+                                        ),
+                                        MessageTemplateAction(
+                                            label = "Words", text = text2
+                                        )
+                                        #URITemplateAction(
+                                        #    label='uri可回傳網址', uri='http://www.xiaosean.website/'
+                                        #)
+                                    ]
                                 )
-                            ]
-                        )
-            line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Template Example", template=button_template_message))
-            
+                    line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Template Example", template=button_template_message))
+                except:
+                    #text = event.message.text
+                    line_bot_api.reply_message(event.reply_token, TextSendMessage(text = "Hi"))
+                    
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
