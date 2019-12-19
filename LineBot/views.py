@@ -47,7 +47,7 @@ def callback(request):
                     user_id = event.source.user_id
                     if event.message.text == "menu":
                         button_template_message = ButtonsTemplate(
-                                thumbnail_image_url = "https://i.imgur.com/eTldj2E.png?1",
+                                thumbnail_image_url = "https://i.imgur.com/Gti2gyT.jpg",
                                 title = 'Menu', 
                                 text = 'Please select',
                                 ratio = "1.51:1",
@@ -56,7 +56,7 @@ def callback(request):
                                     # PostbackTemplateAction 點擊選項後，除了文字會顯示在聊天室中，還回傳data中的資料，
                                     # 此類透過 Postback event 處理。
                                     PostbackTemplateAction(
-                                        label = 'Vocabulary Word', 
+                                        label = 'English Vocabulary', 
                                         text = None,
                                         data = 'word'
                                     )
