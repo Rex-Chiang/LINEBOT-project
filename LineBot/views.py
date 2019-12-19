@@ -63,7 +63,7 @@ def callback(request):
                                 ]
                             )
                     
-                        line_bot_api.reply_message(event.reply_token, button_template_message)
+                        line_bot_api.reply_message(event.reply_token, TextSendMessage(text = "hi"))
             
             elif isinstance(event, PostbackEvent):
                 if event.postback.data == "word":
