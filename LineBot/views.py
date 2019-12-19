@@ -5,7 +5,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from linebot import LineBotApi, WebhookParser
 from linebot.exceptions import InvalidSignatureError, LineBotApiError
-from linebot.models import MessageEvent, TextSendMessage
+from linebot.models import MessageEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction, MessageTemplateAction, URITemplateAction
 
 from ConstellationsCrawler import Crawler1
 from WordsCrawler import Crawler2
@@ -52,7 +52,33 @@ def callback(request):
             text = crawler2.Get_Word()
             user_id = event.source.user_id
             line_bot_api.push_message(user_id, TextSendMessage(text))
-                
+            
+            button_template_message = ButtonsTemplate(
+                            thumbnail_image_url="https://i.imgur.com/eTldj2E.png?1",
+                            title='Menu', 
+                            text='Please select',
+                            ratio="1.51:1",
+                            image_size="cover",
+                            actions=[
+#                                PostbackTemplateAction 點擊選項後，
+#                                 除了文字會顯示在聊天室中，
+#                                 還回傳data中的資料，可
+#                                 此類透過 Postback event 處理。
+                                PostbackTemplateAction(
+                                    label='postback還會回傳data參數', 
+                                    text='postback text',
+                                    data='action=buy&itemid=1'
+                                ),
+                                MessageTemplateAction(
+                                    label='message會回傳text文字', text='message text'
+                                ),
+                                URITemplateAction(
+                                    label='uri可回傳網址', uri='http://www.xiaosean.website/'
+                                )
+                            ]
+                        )
+            line_bot_api.push_message(user_id, TemplateSendMessage(alt_text="Template Example", template=button_template_message))
+            
         return HttpResponse()
     else:
         return HttpResponseBadRequest()
