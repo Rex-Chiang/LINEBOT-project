@@ -45,8 +45,6 @@ def callback(request):
                 except:
                     
                     user_id = event.source.user_id
-                    print('【receive type】', event.message.type)
-                    print('【text content】', event.message.text)
                     if event.message.text == "menu":
                         button_template_message = ButtonsTemplate(
                                 thumbnail_image_url = "https://i.imgur.com/eTldj2E.png?1",
@@ -65,7 +63,7 @@ def callback(request):
                                 ]
                             )
                     
-                        line_bot_api.push_message(user_id, TemplateSendMessage(alt_text = "Just for mobile APP", template = button_template_message))
+                        line_bot_api.reply_message(event.reply_token, button_template_message)
             
             elif isinstance(event, PostbackEvent):
                 if event.postback.data == "word":
