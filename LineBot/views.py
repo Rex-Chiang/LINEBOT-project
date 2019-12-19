@@ -46,7 +46,7 @@ def callback(request):
                     
                     user_id = event.source.user_id
                     print('【receive type】', event.message.type)
-                    print('【text content】', event.message.txt)
+                    print('【text content】', event.message.text)
                     if event.message.text == "menu":
                         button_template_message = ButtonsTemplate(
                                 thumbnail_image_url = "https://i.imgur.com/eTldj2E.png?1",
