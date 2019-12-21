@@ -15,8 +15,6 @@ from WeatherCrawler import Crawler3
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
 
-weather_authorization = settings.Weather_Authorization
-
 @csrf_exempt
 def callback(request):
 
@@ -45,7 +43,7 @@ def callback(request):
                 
                 except:
                     try:
-                        crawler3 = Crawler3(weather_authorization, event.message.text)
+                        crawler3 = Crawler3(event.message.text)
                         text = crawler3.Get_Weather()
                         line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
                     except:    

@@ -140,4 +140,3 @@ LOGGING = {
 # os.getenv可以獲取環境變數的值
 LINE_CHANNEL_SECRET = os.getenv('CHANNEL_SECRET')
 LINE_CHANNEL_ACCESS_TOKEN = os.getenv('CHANNEL_ACCESS_TOKEN')
-Weather_Authorization = os.getenv('Authorization')

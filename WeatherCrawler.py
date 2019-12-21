@@ -3,7 +3,7 @@ import json
 from bs4 import BeautifulSoup as soup
 
 class Crawler3:
-    def __init__(self, Authorization, location):
+    def __init__(self, location):
         
         headers = {'User-Agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36',
                    'Cookie':'fbm_355863885083166=base_domain=; TS01dbf791=0107dddfefd0a47165637cc243981e66bfce6384f2586041a683ae0efa88ae11356a99eeae',
@@ -11,7 +11,8 @@ class Crawler3:
                    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3',
                    'Host':'opendata.cwb.gov.tw',
                    'Upgrade-Insecure-Requests':'1'}
-
+        
+        Authorization = "CWB-6DF4F34D-3A8E-400C-B68E-B71D462F50B2"
         url = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=" + Authorization + "&locationName=" + location
             
         # 對網站發出請求
@@ -50,5 +51,5 @@ class Crawler3:
         return WeatherContent
     
 if __name__ == "__main__":
-    crawler = Crawler3("CWB-6DF4F34D-3A8E-400C-B68E-B71D462F50B2", "臺北市")
+    crawler = Crawler3("臺北市")
     print(crawler.Get_Weather())
