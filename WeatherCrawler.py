@@ -48,7 +48,7 @@ class Crawler3:
         for i in range(3):
             WeatherContent += Content[i]
         
-        return WeatherContent
+        return WeatherContent.rstrip()
     
 if __name__ == "__main__":
     crawler = Crawler3("臺北市")
