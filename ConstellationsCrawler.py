@@ -18,8 +18,10 @@ class Crawler1:
         
         num = ConstellationsDict[constellation]
         
+        # 指定日期
         if date:
             url = "http://astro.click108.com.tw/daily_" + num + ".php?iAstro=" + num + "&iType=0&iAcDay=" + date
+        # 未指定日期
         else:
             url = "http://astro.click108.com.tw/daily_" + num + ".php?iAstro=" + num
             

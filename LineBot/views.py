@@ -8,11 +8,14 @@ from linebot.exceptions import InvalidSignatureError, LineBotApiError
 from linebot.models import MessageEvent, PostbackEvent, TextSendMessage, TemplateSendMessage, ButtonsTemplate, PostbackTemplateAction
 from ConstellationsCrawler import Crawler1
 from WordsCrawler import Crawler2
+from WeatherCrawler import Crawler3
 
 # 這邊是Linebot的授權TOKEN(註冊LineDeveloper帳號會取得)，
 # 使用時記得設成環境變數，不要公開在程式碼
 line_bot_api = LineBotApi(settings.LINE_CHANNEL_ACCESS_TOKEN)
 parser = WebhookParser(settings.LINE_CHANNEL_SECRET)
+
+weather_authorization = settings.Weather_Authorization
 
 @csrf_exempt
 def callback(request):
@@ -41,25 +44,30 @@ def callback(request):
                     line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
                 
                 except:
-                    if event.message.text == "menu":
-                        button_template_message = ButtonsTemplate(
-                                thumbnail_image_url = "https://i.imgur.com/MpVihQk.jpg",
-                                title = 'Menu', 
-                                text = 'Please select',
-                                ratio = "1.51:1",
-                                image_size = "cover",
-                                actions = [
-                                    # PostbackTemplateAction 點擊選項後，除了文字會顯示在聊天室中，還回傳data中的資料，
-                                    # 此類透過 Postback event 處理。
-                                    PostbackTemplateAction(
-                                        label = 'English Vocabulary', 
-                                        text = None,
-                                        data = 'word'
-                                    )
-                                ]
-                            )
-                    
-                        line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "Just for mobile APP", template = button_template_message))
+                    try:
+                        crawler3 = Crawler3(weather_authorization, event.message.text)
+                        text = crawler3.Get_Weather()
+                        line_bot_api.reply_message(event.reply_token, TextSendMessage(text))
+                    except:    
+                        if event.message.text == "menu":
+                            button_template_message = ButtonsTemplate(
+                                    thumbnail_image_url = "https://i.imgur.com/MpVihQk.jpg",
+                                    title = 'Menu', 
+                                    text = 'Please select',
+                                    ratio = "1.51:1",
+                                    image_size = "cover",
+                                    actions = [
+                                        # PostbackTemplateAction 點擊選項後，除了文字會顯示在聊天室中，還回傳data中的資料，
+                                        # 此類透過 Postback event 處理。
+                                        PostbackTemplateAction(
+                                            label = 'English Vocabulary', 
+                                            text = None,
+                                            data = 'word'
+                                        )
+                                    ]
+                                )
+                        
+                            line_bot_api.reply_message(event.reply_token, TemplateSendMessage(alt_text = "Just for mobile APP", template = button_template_message))
             
             elif isinstance(event, PostbackEvent):
                 if event.postback.data == "word":
