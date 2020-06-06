@@ -2,7 +2,7 @@ asgiref==3.2.3
 beautifulsoup4==4.8.1
 certifi==2019.11.28
 chardet==3.0.4
-Django==2.2.5
+Django==2.2.13
 future==0.18.2
 gunicorn==19.9.0
 idna==2.8
